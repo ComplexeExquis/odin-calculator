@@ -56,11 +56,66 @@ p {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(5, 1fr);
-    width: 320px;
-    height: 640px;
     gap: 0.5rem;
 }
 
 .btn {
-    background-color: rebeccapurple;
+    background-color: #F9F9F9; 
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25); 
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    max-width: 4rem;
+    max-height: 4rem;
 }
+
+.btn:hover {
+    cursor: pointer;
+    background-color: #e8e8e8;
+}
+
+.btn-text{
+    font-size: 1.5rem;
+    color: #D8EFFD;
+    font-weight: 400;
+    -webkit-text-stroke: black 0.5px;
+}
+
+.btn-icon{
+    max-width: 1rem;
+    max-width: 1rem;
+}
+
+/* handle edge cases */
+.backspace-btn-text,
+.backspace-btn-icon {
+    margin-top: 12px;
+}
+.modulo-btn-text,
+.modulo-btn-icon,
+.subtract-btn-icon,
+.plus-btn-icon,
+.divide-btn-text {
+    margin-top: 4px;
+}
+.divide-btn-icon,
+.digit-zero-btn-icon {
+    margin-top: 6px;
+}
+.multiply-btn-icon{
+    margin-top: 8px;
+}
+.abigus-btn-icon{
+    max-width: 4rem;
+    max-height: 4rem;
+}
+.dot-btn{
+    gap: 6px;
+}
+
+
+
+
+
