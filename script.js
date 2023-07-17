@@ -32,25 +32,24 @@ let currentSide = "left";
 
 let leftSideNumber = "";
 let operator = "";
-let RightSideNumber = "";
+let rightSideNumber = "";
 
 let calculationResult = "";
-
+let isUsingDot = false;
 
 
 // calculation result box
 const resultText = document.querySelector(".result-text");
 function display() {
-
+    // if equal btn is pressed
     if (calculationResult !== "") {
         resultText.textContent = 
-            `${leftSideNumber} ${operator} ${RightSideNumber} = ${calculationResult}`;
+            `${leftSideNumber} ${operator} ${rightSideNumber} = ${calculationResult}`;
     }
+    // if not
     else {
-        resultText.textContent = `${leftSideNumber} ${operator} ${RightSideNumber}`;
+        resultText.textContent = `${leftSideNumber} ${operator} ${rightSideNumber}`;
     }
-        
-
 }
 
 
@@ -69,10 +68,13 @@ function divide(a, b) {
     if (!b) {
         return 0;
     }
-    return a / b;
+    return round( a / b );
 }
 function modulo(a, b) {
     return a % b;
+}
+function round(num) {
+    return Math.round(num * 100) / 100
 }
 
 
@@ -83,19 +85,37 @@ function clear(event) {
     // clear all global variables
     leftSideNumber = "";
     operator = "";
-    RightSideNumber = "";
+    rightSideNumber = "";
 
     calculationResult = "";
+
+    isUsingDot = false;
 
     display();
 
     playAudio(event.currentTarget.dataset.key);
 }
-function backspace() {
+function backspace(event) {
     // first,
     // if rightside is not empty, pop one number from right
+    if (rightSideNumber !== "") {
+        rightSideNumber = rightSideNumber.slice(0, -1);
+    }
     // else if operator is not empty, clear operator
+    else if (operator !== "") {
+        operator = "";
+    }
     // else if leftside is not empty, pop one number from right
+    else if (leftSideNumber !== "") {
+        leftSideNumber = leftSideNumber.slice(0, -1);
+    }
+
+    display();
+
+    playAudio(event.currentTarget.dataset.key);
+
+    
+
 }
 function equal(event) {
     if (currentSide === "left") {
@@ -103,37 +123,67 @@ function equal(event) {
     }
 
     // switch case for each operator
-    switch (operator) {
-        case "+":
-            calculationResult = 
-                add(parseInt(leftSideNumber), parseInt(RightSideNumber));
-            break;
-        case "-":
-            calculationResult = 
-                subtract(parseInt(leftSideNumber), parseInt(RightSideNumber));
-            break;
-        case "*":
-            calculationResult = 
-                multiply(parseInt(leftSideNumber), parseInt(RightSideNumber));
-            break;
-        case "/":
-            calculationResult = 
-                divide(parseInt(leftSideNumber), parseInt(RightSideNumber));
-            break;
-        case "%":
-            calculationResult = 
-                modulo(parseInt(leftSideNumber), parseInt(RightSideNumber));
-            break;
-
-        default:
-            break;
+    if (isUsingDot) {
+        switch (operator) {
+            case "+":
+                calculationResult = 
+                    round( add(parseFloat(leftSideNumber), parseFloat(rightSideNumber)) );
+                break;
+            case "-":
+                calculationResult = 
+                    round( subtract(parseFloat(leftSideNumber), parseFloat(rightSideNumber)) );
+                break;
+            case "*":
+                calculationResult = 
+                    round( multiply(parseFloat(leftSideNumber), parseFloat(rightSideNumber)) );
+                break;
+            case "/":
+                calculationResult = 
+                    round( divide(parseFloat(leftSideNumber), parseFloat(rightSideNumber)) );
+                break;
+            case "%":
+                calculationResult = 
+                    round( modulo(parseFloat(leftSideNumber), parseFloat(rightSideNumber)) );
+                break;
+    
+            default:
+                break;
+        }
+    } else {
+        switch (operator) {
+            case "+":
+                calculationResult = 
+                    add(parseInt(leftSideNumber), parseInt(rightSideNumber));
+                break;
+            case "-":
+                calculationResult = 
+                    subtract(parseInt(leftSideNumber), parseInt(rightSideNumber));
+                break;
+            case "*":
+                calculationResult = 
+                    multiply(parseInt(leftSideNumber), parseInt(rightSideNumber));
+                break;
+            case "/":
+                calculationResult = 
+                    divide(parseInt(leftSideNumber), parseInt(rightSideNumber));
+                break;
+            case "%":
+                calculationResult = 
+                    modulo(parseInt(leftSideNumber), parseInt(rightSideNumber));
+                break;
+    
+            default:
+                break;
+        }
     }
+    
     // display result
     display();
+    
 
     // put result into left side number, clear right side and operator
-    leftSideNumber = calculationResult;
-    RightSideNumber = "";
+    leftSideNumber = calculationResult.toString();
+    rightSideNumber = "";
     operator = "";
 
     // clear result
@@ -144,8 +194,24 @@ function equal(event) {
     // play audio
     playAudio(event.currentTarget.dataset.key);
 }
-function dot() {
+function dot(event) {
     
+    if (currentSide === "left") {
+        if ( leftSideNumber.includes(".") || !leftSideNumber) 
+            return; // if has dot or the first element, return
+        else 
+            leftSideNumber += ".";  // else add dot
+    }
+    else {
+        if ( rightSideNumber.includes(".") || !rightSideNumber ) 
+            return;
+        else 
+           rightSideNumber += ".";
+    }
+    isUsingDot = true;
+    display();
+
+    playAudio(event.currentTarget.dataset.key);
 }
 
 
@@ -167,11 +233,14 @@ function playAudio(dataKey) {
 
 
 // event listeners
-digitZeroBtn.addEventListener("click", (event) => {
-    if (currentSide === "left") 
+digitZeroBtn.addEventListener("click", (event) => { 
+    if (currentSide === "left") {
         leftSideNumber += "0";
-    else 
-        RightSideNumber += "0"
+    } 
+    else {
+        rightSideNumber += "0"
+    }
+        
     
     display();
 
@@ -182,7 +251,7 @@ digitOneBtn.addEventListener("click", (event) => {
     if (currentSide === "left") 
         leftSideNumber += "1";
     else 
-        RightSideNumber += "1"
+        rightSideNumber += "1"
     
     display();
 
@@ -193,7 +262,7 @@ digitTwoBtn.addEventListener("click", (event) => {
     if (currentSide === "left") 
         leftSideNumber += "2";
     else 
-        RightSideNumber += "2"
+        rightSideNumber += "2"
     
     display();
 
@@ -204,7 +273,7 @@ digitThreeBtn.addEventListener("click", (event) => {
     if (currentSide === "left") 
         leftSideNumber += "3";
     else 
-        RightSideNumber += "3"
+        rightSideNumber += "3"
     
     display();
 
@@ -215,7 +284,7 @@ digitFourBtn.addEventListener("click", (event) => {
     if (currentSide === "left") 
         leftSideNumber += "4";
     else 
-        RightSideNumber += "4"
+        rightSideNumber += "4"
     
     display();
 
@@ -226,7 +295,7 @@ digitFiveBtn.addEventListener("click", (event) => {
     if (currentSide === "left") 
         leftSideNumber += "5";
     else 
-        RightSideNumber += "5"
+        rightSideNumber += "5"
     
     display();
 
@@ -237,7 +306,7 @@ digitSixBtn.addEventListener("click", (event) => {
     if (currentSide === "left") 
         leftSideNumber += "6";
     else 
-        RightSideNumber += "6"
+        rightSideNumber += "6"
     
     display();
 
@@ -248,7 +317,7 @@ digitSevenBtn.addEventListener("click", (event) => {
     if (currentSide === "left") 
         leftSideNumber += "7";
     else 
-        RightSideNumber += "7"
+        rightSideNumber += "7"
     
     display();
 
@@ -259,7 +328,7 @@ digitEightBtn.addEventListener("click", (event) => {
     if (currentSide === "left") 
         leftSideNumber += "8";
     else 
-        RightSideNumber += "8"
+        rightSideNumber += "8"
     
     display();
 
@@ -270,7 +339,7 @@ digitNineBtn.addEventListener("click", (event) => {
     if (currentSide === "left") 
         leftSideNumber += "9";
     else 
-        RightSideNumber += "9"
+        rightSideNumber += "9"
     
     display();
 
@@ -340,8 +409,11 @@ moduloBtn.addEventListener("click", (event) => {
 
 equalBtn.addEventListener("click", equal);
 clearBtn.addEventListener("click", clear);
-
-
+dotBtn.addEventListener("click", dot);
+backspaceBtn.addEventListener("click", backspace);
+abigusBtn.addEventListener("click", (event) => {
+    playAudio(event.currentTarget.dataset.key);
+});
 
 
 
