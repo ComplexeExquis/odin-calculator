@@ -222,7 +222,6 @@ function playAudio(dataKey) {
     // play the audio
 
     const audio = document.querySelector(`.audio[data-key="${dataKey}"]`);
-    console.log(audio);
 
     if (!audio) return;
 
@@ -414,10 +413,4 @@ backspaceBtn.addEventListener("click", backspace);
 abigusBtn.addEventListener("click", (event) => {
     playAudio(event.currentTarget.dataset.key);
 });
-
-
-
-
-
-
 
