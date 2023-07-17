@@ -89,7 +89,7 @@ function clear(event) {
 
     display();
 
-    playAudio(event.target.dataset.key);
+    playAudio(event.currentTarget.dataset.key);
 }
 function backspace() {
     // first,
@@ -142,7 +142,7 @@ function equal(event) {
     currentSide = "left";
 
     // play audio
-    playAudio(event.target.dataset.key);
+    playAudio(event.currentTarget.dataset.key);
 }
 function dot() {
     
@@ -175,7 +175,7 @@ digitZeroBtn.addEventListener("click", (event) => {
     
     display();
 
-    playAudio(event.target.dataset.key);
+    playAudio(event.currentTarget.dataset.key);
 
 });
 digitOneBtn.addEventListener("click", (event) => {
@@ -186,7 +186,7 @@ digitOneBtn.addEventListener("click", (event) => {
     
     display();
 
-    playAudio(event.target.dataset.key);
+    playAudio(event.currentTarget.dataset.key);
 
 });
 digitTwoBtn.addEventListener("click", (event) => {
@@ -197,7 +197,7 @@ digitTwoBtn.addEventListener("click", (event) => {
     
     display();
 
-    playAudio(event.target.dataset.key);
+    playAudio(event.currentTarget.dataset.key);
 
 });
 digitThreeBtn.addEventListener("click", (event) => {
@@ -208,7 +208,7 @@ digitThreeBtn.addEventListener("click", (event) => {
     
     display();
 
-    playAudio(event.target.dataset.key);
+    playAudio(event.currentTarget.dataset.key);
 
 });
 digitFourBtn.addEventListener("click", (event) => {
@@ -219,7 +219,7 @@ digitFourBtn.addEventListener("click", (event) => {
     
     display();
 
-    playAudio(event.target.dataset.key);
+    playAudio(event.currentTarget.dataset.key);
 
 });
 digitFiveBtn.addEventListener("click", (event) => {
@@ -230,7 +230,7 @@ digitFiveBtn.addEventListener("click", (event) => {
     
     display();
 
-    playAudio(event.target.dataset.key);
+    playAudio(event.currentTarget.dataset.key);
 
 });
 digitSixBtn.addEventListener("click", (event) => {
@@ -241,7 +241,7 @@ digitSixBtn.addEventListener("click", (event) => {
     
     display();
 
-    playAudio(event.target.dataset.key);
+    playAudio(event.currentTarget.dataset.key);
 
 });
 digitSevenBtn.addEventListener("click", (event) => {
@@ -252,7 +252,7 @@ digitSevenBtn.addEventListener("click", (event) => {
     
     display();
 
-    playAudio(event.target.dataset.key);
+    playAudio(event.currentTarget.dataset.key);
 
 });
 digitEightBtn.addEventListener("click", (event) => {
@@ -263,7 +263,7 @@ digitEightBtn.addEventListener("click", (event) => {
     
     display();
 
-    playAudio(event.target.dataset.key);
+    playAudio(event.currentTarget.dataset.key);
 
 });
 digitNineBtn.addEventListener("click", (event) => {
@@ -274,7 +274,7 @@ digitNineBtn.addEventListener("click", (event) => {
     
     display();
 
-    playAudio(event.target.dataset.key);
+    playAudio(event.currentTarget.dataset.key);
 
 });
 plusBtn.addEventListener("click", (event) => {
@@ -286,7 +286,7 @@ plusBtn.addEventListener("click", (event) => {
     currentSide = "right";
     display();
 
-    playAudio(event.target.dataset.key);
+    playAudio(event.currentTarget.dataset.key);
 
 });
 subtractBtn.addEventListener("click", (event) => {
@@ -298,7 +298,7 @@ subtractBtn.addEventListener("click", (event) => {
     currentSide = "right";
     display();
 
-    playAudio(event.target.dataset.key);
+    playAudio(event.currentTarget.dataset.key);
     
 });
 multiplyBtn.addEventListener("click", (event) => {
@@ -310,7 +310,7 @@ multiplyBtn.addEventListener("click", (event) => {
     currentSide = "right";
     display();
 
-    playAudio(event.target.dataset.key);
+    playAudio(event.currentTarget.dataset.key);
     
 });
 divideBtn.addEventListener("click", (event) => {
@@ -322,7 +322,7 @@ divideBtn.addEventListener("click", (event) => {
     currentSide = "right";
     display();
 
-    playAudio(event.target.dataset.key);
+    playAudio(event.currentTarget.dataset.key);
 
 });
 moduloBtn.addEventListener("click", (event) => {
@@ -334,21 +334,12 @@ moduloBtn.addEventListener("click", (event) => {
     currentSide = "right";
     display();
 
-    playAudio(event.target.dataset.key);
+    playAudio(event.currentTarget.dataset.key);
     
 });
 
 equalBtn.addEventListener("click", equal);
 clearBtn.addEventListener("click", clear);
-
-
-
-
-
-
-
-
-
 
 
 
